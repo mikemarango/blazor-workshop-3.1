@@ -1,7 +1,6 @@
 ﻿@page "/"
 @inject HttpClient HttpClient
 @inject OrderState  OrderState
-@inject NavigationManager  NavigationManager
 
 <div class="main">
     <ul class="pizza-cards">
@@ -40,10 +39,9 @@
     <div class="order-total @(Order.Pizzas.Any() ? "" : "hidden")">
         Total:
         <span class="total-price">@Order.FormattedTotalPrice</span>
-        <button class="btn btn-warning" disabled="@(Order.Pizzas.Count() == 0)"
-                @onclick="PlaceOrder">
+        <a href="checkout" class="btn btn-warning" disabled="@(Order.Pizzas.Count() == 0)">
             Order >
-        </button>
+        </a>
     </div>
 </div>
 
@@ -65,12 +63,6 @@
         specials = await HttpClient.GetJsonAsync<List<PizzaSpecial>>("specials");
     }
 
-    async Task PlaceOrder()
-    {
-        var orderId = await HttpClient.PostJsonAsync<int>("orders", Order);
-        OrderState.ResetOrder();
-        NavigationManager.NavigateTo($"myorders/{orderId}");
-    }
 
 }
 
