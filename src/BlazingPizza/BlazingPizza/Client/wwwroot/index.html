@@ -1,24 +1,24 @@
-<!DOCTYPE html>
-<html>
-
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>BlazingPizza</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <base href="/" />
+    <link rel="icon" href="data:;base64,=" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
+    <link href="_content/BlazingPizza.Components/content/leaflet/leaflet.css" rel="stylesheet" />
+    <title>Blazing Pizza</title>
 </head>
-
 <body>
-    <app>Loading...</app>
+    <app>
+        <div class="loading-bar"></div>
+    </app>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <!--<script src="_content/Cloudcrate.AspNetCore.Blazor.Browser.Storage/Storage.js"></script>-->
+    <script src="_content/BlazingPizza.Components/content/localStorage.js"></script>
+    <script src="_content/BlazingPizza.Components/content/deliveryMap.js"></script>
+    <script src="_content/BlazingPizza.Components/content/leaflet/leaflet.js"></script>
 </body>
-
 </html>
