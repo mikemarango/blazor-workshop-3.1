@@ -1,4 +1,4 @@
-﻿using BlazingPizza.Components.Map;
+﻿using BlazingPizza.Components;
 using System;
 using System.Collections.Generic;
 using System.Text;

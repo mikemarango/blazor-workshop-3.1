@@ -7,7 +7,7 @@
         {
             @foreach (var special in specials)
             {
-                <li style="background-image: url('@special.ImageUrl')">
+                <li @onclick="() => Console.WriteLine(special.Name)" style="background-image: url('@special.ImageUrl')">
                     <div class="pizza-info">
                         <span class="title">@special.Name</span>
                         @special.Description
