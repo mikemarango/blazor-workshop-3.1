@@ -12,7 +12,7 @@ namespace BlazingPizza.Shared
         public DateTime CreatedTime { get; set; }
         public Address DeliveryAddress { get; set; }
         public LatLong DeliveryLocation { get; set; }
-        public List<Pizza> Pizzas { get; set; }
+        public List<Pizza> Pizzas { get; set; } = new List<Pizza>();
         public decimal TotalPrice =>
             Pizzas.Sum(p => p.TotalPrice);
         public string FormattedTotalPrice =>
