@@ -1,0 +1,82 @@
+﻿@page "/myorders/{orderId:int}"
+@using System.Threading
+@inject HttpClient  HttpClient
+@implements IDisposable
+
+    <div class="main">
+        @if (invalidOrder)
+        {
+            <h2>Nope</h2>
+            <p>Sorry, this order could not be loaded.</p>
+        }
+        else if (orderWithStatus is null)
+        {
+            <text>Loading...</text>
+        }
+        else
+        {
+            <div class="track-order">
+                <div class="track-order-title">
+                    <h2>
+                        Order placed @orderWithStatus.Order.CreatedTime.ToLongDateString()
+                    </h2>
+                    <p class="ml-auto mb-0">
+                        Status: <strong>@orderWithStatus.StatusText</strong>
+                    </p>
+                </div>
+                <div class="track-order-body">
+                    <div class="track-order-details">
+                        <text>TODO: Show order review</text>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+@code {
+    [Parameter] public int OrderId { get; set; }
+    OrderWithStatus orderWithStatus;
+    bool invalidOrder;
+    CancellationTokenSource cancellationTokenSource;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        cancellationTokenSource?.Cancel();
+        await PollForUpdatesAsync();
+    }
+
+    /// <summary>
+    /// Ensures polling cancellation
+    /// </summary>
+    /// <returns></returns>
+    async Task PollForUpdatesAsync()
+    {
+        cancellationTokenSource = new CancellationTokenSource();
+        while (!cancellationTokenSource.IsCancellationRequested)
+        {
+            try
+            {
+                invalidOrder = false;
+                orderWithStatus = await HttpClient.GetJsonAsync<OrderWithStatus>($"orders/{OrderId}");
+            }
+            catch (Exception ex)
+            {
+                invalidOrder = true;
+                cancellationTokenSource.Cancel();
+                Console.WriteLine(ex);
+                throw;
+            }
+            StateHasChanged();
+            await Task.Delay(4000);
+        }
+    }
+
+    /// <summary>
+    /// Stops polling once an order is removed from the display
+    /// </summary>
+    void IDisposable.Dispose()
+    {
+        cancellationTokenSource?.Cancel();
+    }
+}
